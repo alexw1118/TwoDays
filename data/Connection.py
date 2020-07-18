@@ -3,7 +3,7 @@ import pyodbc
 
 class Connection:
     def __init__(self):
-        self.connection();
+        self.connection()
 
     @staticmethod
     def connection():
@@ -13,4 +13,4 @@ class Connection:
             "Database=TwoDays;"        # Database name
             "Trusted_Connection=yes;"
         )
-        return conn.open()
+        return conn.cursor()
