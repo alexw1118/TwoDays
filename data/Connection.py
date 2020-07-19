@@ -1,4 +1,5 @@
 import pyodbc
+import config
 
 
 class Connection:
@@ -7,10 +8,14 @@ class Connection:
 
     @staticmethod
     def connection():
-        conn = pyodbc.connect(
-            "Driver={SQL Server};"
-            "Server=DESKTOP-98SH10H;"  # Server name
-            "Database=TwoDays;"        # Database name
-            "Trusted_Connection=yes;"
-        )
-        return conn.cursor()
+        try:
+            conn = pyodbc.connect(
+                "Driver={" + config.DATABASE_DRIVER + "};"
+                "Server=" + config.DATABASE_SERVER + ";"
+                "Database=" + config.DATABASE_NAME + ""
+                "Trusted_Connection=" + config.DATABASE_TRUSTED_CONNECTION + ";"
+            )
+            return conn
+        except Exception as error:
+            print("Connection Error: ", error)
+            return None
