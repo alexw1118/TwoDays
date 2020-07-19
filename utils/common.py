@@ -1,20 +1,28 @@
-from data import Connection
+import re
 
 
-def verify(data):
-    flag = False
-    sql_statement = "select * from user"
-    cur = Connection.Connection
-    cur.execute(sql_statement)
-
-    return flag
+def verify(input_data, existing_data):
+    return True if input_data == existing_data else False  # True: correct credential, False: wrong credential
 
 
-def validate(data):
-    flag = False
-    return flag
+def valid_integer(data):
+    value = int(data)
+    if isinstance(value, int):
+        return True
+    return False          # True: is integer, False: not integer
+
+
+def valid_decimal(data):
+    value = float(data)
+    if isinstance(value, float):
+        return True
+    return False          # True: is decimal, False: not decimal
 
 
 def isNone(data):
-    return not all(data)  # True: contain null value, False: not contain null value
+    return not all(data)  # True: tuple contain null value, False: tuple not contain null value
 
+
+def valid_email(data):
+    regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
+    return True if regex.match(data) else False  # True: email valid, False: email not valid
