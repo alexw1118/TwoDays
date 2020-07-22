@@ -13,7 +13,7 @@ def login(input_credential):
 
 def get_user_details(unique_row_key):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         statement = """SELECT * FROM UserAccount WHERE Username = %s"""
         cursor.execute(statement, (unique_row_key,))

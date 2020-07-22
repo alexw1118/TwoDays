@@ -15,7 +15,7 @@ def response(value, request_id):
 
 def create_request(statement, value):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement, value)
         connect.commit()

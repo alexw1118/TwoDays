@@ -3,7 +3,7 @@ from data import Connection
 
 def create(statement, value):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement, value)
         connect.commit()

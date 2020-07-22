@@ -3,7 +3,7 @@ from data import Connection
 
 def delete(statement, row_id):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement, (row_id,))
         connect.commit()
