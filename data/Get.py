@@ -3,7 +3,7 @@ from data import Connection
 
 def read_all(statement):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement)
         records = cursor.fetchall()
@@ -20,7 +20,7 @@ def read_all(statement):
 
 def read(statement, row_id):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement, (row_id,))
         record = cursor.fetchone()

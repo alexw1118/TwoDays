@@ -1,6 +1,6 @@
 from flask import json, jsonify, app, Flask, render_template
-import uuid
-from model import User
+from model import User, BaseProperty
+from service import ViewProperty
 
 
 app = Flask(__name__)
@@ -8,46 +8,34 @@ app = Flask(__name__)
 
 @app.route('/')
 def default():
-    uid = test()
-    return render_template('Index.html', uuid=uid)
+    return render_template('Index.html')
 
 
 @app.route('/url_path')
 def name():
-    records = [[1,2,3,4,5,6,7,8,9,0,11],[1,2,3,4,5,6,7,8,9,0,11],[1,2,3,4,5,6,7,8,9,0,11]]
+    records = ViewProperty.view_all_property()
     list = []
     for record in records:
-        user = User.User(record)
-        do = vars(user)
+        baseProp = BaseProperty.BaseProperty(record)
+        do = vars(baseProp)
         list.append(do)
-
-    objdict = {
-        "username": user.username,
-        "bank_account": user.bank_account,
-        "privilege": user.privilege
-    }
-    data = [1,2,3,4,5,6,7]
-    property_id = uuid.uuid4()
-    print(property_id)
     return jsonify(list)
 
 
 @app.route('/url_path2')
 def summary():
-    data = "method()"
-    user = User.User([1,2,3,4,5,6,7,8,9,0,11]).__dict__
-    do = dict(user)
+    records = ViewProperty.view_all_property()
+    list = []
+    for record in records:
+        baseProp = BaseProperty.BaseProperty(record)
+        do = vars(baseProp)
+        list.append(do)
     response = app.response_class(
-        response=json.dumps(do),
+        response=json.dumps(list),
         status=200,
         mimetype='application/json'
     )
     return response
-
-
-def test():
-    property_id = uuid.uuid4()
-    return property_id
 
 
 if __name__ == '__main__':

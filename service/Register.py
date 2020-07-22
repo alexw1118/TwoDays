@@ -27,7 +27,7 @@ def validate_user(user):
 
 def create_user(value):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         statement = """INSERT INTO UserAccount (FullName, Username, Password, Email, Phone, UserPrivilege, BankName, BankAccount, IdentityCardNumber, ProfileImage) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         cursor.execute(statement, value)

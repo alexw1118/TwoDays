@@ -9,7 +9,7 @@ def rent(value, property_id):
 
 def update_property(statement, value, row_id):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement, (value, row_id))
         connect.commit()

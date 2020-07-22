@@ -2,20 +2,22 @@ from data import Connection
 
 
 def purchase(value):
-    statement = """INSERT INTO Owned_Property (RentPrice, SellPrice) VALUES (%s, %s)"""
+    statement = """INSERT INTO BaseProperty (PropertyUID, Price, PropertyType, YearBuilt, TenureType, Bedroom, Bathroom, ExtraRoom, Parking, Size, FloorPlan, Unit, Area, Street, District, State, Postcode, Township, Contract, ContactPeriod, RentID, OwnershipID, RentPrice, SellPrice, Images, RentalStartDate, RentalEndDate, RentalPeriod, Description, LastUpdatedDate, RentContract, SellContract) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
     token = add_new_ownership(statement, value)
     return token
 
 
-def transfer_ownership(value, property_id):
-    statement = """UPDATE Owned_Property SET UserID = %s WHERE OwnershipID = %s"""
-    token = update_owned_property(statement, value, property_id)
+def transfer_ownership(value, is_deleted, property_id, ownership_id):
+    statement = """UPDATE BaseProperty SET IsDeleted = %s WHERE PropertyUID = %s AND OwnershipID = %s"""
+    token = update_previous_property(statement, is_deleted, property_id, ownership_id)
+    if token is True:
+        token = purchase(value)
     return token
 
 
 def add_new_ownership(statement, value):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
         cursor.execute(statement, value)
         connect.commit()
@@ -31,11 +33,11 @@ def add_new_ownership(statement, value):
         print("Connection Closed!")
 
 
-def update_owned_property(statement, value, row_id):
+def update_previous_property(statement, value, row_id_1, row_id_2):
     try:
-        connect = Connection.Connection
+        connect = Connection.connection()
         cursor = connect.cursor()
-        cursor.execute(statement, (value, row_id))
+        cursor.execute(statement, (value, row_id_1, row_id_2))
         connect.commit()
         print("Modification Successful!")
         return True

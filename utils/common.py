@@ -1,4 +1,5 @@
 import re
+import uuid
 
 
 def verify(input_data, existing_data):
@@ -26,3 +27,7 @@ def isNone(data):
 def valid_email(data):
     regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
     return True if regex.match(data) else False  # True: email valid, False: email not valid
+
+
+def get_uuid():
+    return uuid.uuid4()
