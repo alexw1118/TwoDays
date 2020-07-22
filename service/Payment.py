@@ -1,8 +1,13 @@
 from data import Connection
 
+#  after approved, when purchase button clicked, transaction start:
+#  t1: signed contract & checkout to 3rd party payment api
+#  t2: if payment success/ receive payment success token from 3rd party payment api, then insert payment into billing table
+#  t3: execute transfer ownership
+
 
 def pay_bill(value, billing_id):
-    statement = """"""
+    statement = """UPDATE Billing SET PaymentDate = %s WHERE BillingID = %s"""
     token = update_billing(statement, value, billing_id)
     return token
 
