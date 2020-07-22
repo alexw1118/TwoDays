@@ -5,7 +5,7 @@ def purchase(value):
     statement = """INSERT INTO BaseProperty (PropertyUID, Price, PropertyType, YearBuilt, TenureType, Bedroom, Bathroom, ExtraRoom, Parking, Size, FloorPlan, Unit, Area, Street, District, State, Postcode, Township, Contract, ContactPeriod, RentID, OwnershipID, RentPrice, SellPrice, Images, RentalStartDate, RentalEndDate, RentalPeriod, Description, LastUpdatedDate, RentContract, SellContract) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
     token = add_new_ownership(statement, value)
     return token
-
+#
 
 def transfer_ownership(value, is_deleted, property_id, ownership_id):
     statement = """UPDATE BaseProperty SET IsDeleted = %s WHERE PropertyUID = %s AND OwnershipID = %s"""

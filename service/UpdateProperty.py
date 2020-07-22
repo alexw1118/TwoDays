@@ -2,7 +2,7 @@ from data import Connection
 
 
 def update(value, property_id):
-    statement = """UPDATE BaseProperty SET Furnish = %s, RentPrice = %s, SellPrice = %s, Usage = %s, Images = %s, RentalStartDate = %s, RentalEndDate = %s, RentalPeriod = %s, Description = %s, LastUpdatedDate = %s, Contract = %s WHERE PropertyID = %s"""
+    statement = """UPDATE BaseProperty SET Furnish = %s, RentPrice = %s, SellPrice = %s, Usage = %s, FreeUtility = %s, Images = %s, RentalStartDate = %s, RentalEndDate = %s, RentalPeriod = %s, Description = %s, LastUpdatedDate = %s, RentContract = %s, SellContract = %s WHERE PropertyID = %s"""
     token = update_property_details(statement, value, property_id)
     return token
 
