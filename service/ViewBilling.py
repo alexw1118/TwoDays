@@ -1,47 +1,20 @@
-from data import Connection
+from data import Get
+from model import Billing
 
 
-def view_my_billing(user_id):  # view billing list
-    statement = """SELECT * FROM Billing b JOIN BaseProperty bp ON bp.PropertyID = b.PropertyID WHERE bp.RentID = %s OR op.UserID = %s"""
-    property_list = get_my_billing(statement, user_id)
-    return property_list
+def check(user_id):  # view billing list
+    statement = """SELECT * FROM Billing b JOIN BaseProperty bp ON bp.PropertyID = b.PropertyID WHERE bp.RentID = %s OR bp.OwnershipID = %s"""
+    billing_list = []
+    records = Get.read_multiple(statement=statement, row_id=user_id)
+    for record in records:
+        billing_list.append(vars(Billing.Billing(record)))
+    return billing_list
 
 
-def view_all_billing():  # admin view billing list
+def admin():  # admin view billing list
     statement = """SELECT * FROM Billing WHERE BillingType != 'Rental'"""
-    property_list = get_all_billing(statement)
-    return property_list
-
-
-def get_all_billing(statement):
-    try:
-        connect = Connection.connection()
-        cursor = connect.cursor()
-        cursor.execute(statement)
-        records = cursor.fetchall()
-        return records
-    except Exception as error:
-        print("Selection Error: ", error)
-        return None
-    finally:
-        # closing database connection.
-        cursor.close()
-        connect.close()
-        print("Connection Closed!")
-
-
-def get_my_billing(statement, row_id):
-    try:
-        connect = Connection.connection()
-        cursor = connect.cursor()
-        cursor.execute(statement, (row_id,))
-        records = cursor.fetchall()
-        return records
-    except Exception as error:
-        print("Selection Error: ", error)
-        return None
-    finally:
-        # closing database connection.
-        cursor.close()
-        connect.close()
-        print("Connection Closed!")
+    billing_list = []
+    records = Get.read_multiple(statement=statement)
+    for record in records:
+        billing_list.append(vars(Billing.Billing(record)))
+    return billing_list
