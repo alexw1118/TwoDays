@@ -1,31 +1,13 @@
-from data import Connection
+from data import Put
 
 
-def upload_profile_image(value, user_id):
+def upload(image, user_id):
     statement = """UPDATE UserAccount SET ProfileImage = %s WHERE UserID = %s"""
-    token = update_image(statement, value, user_id)
+    token = Put.update(statement=statement, value=image, row_id=user_id)
     return token
 
 
-def upload_property_images(value, property_id):
+def bulk_upload(images, property_id):
     statement = """UPDATE BaseProperty SET Images = %s WHERE PropertyID = %s"""
-    token = update_image(statement, value, property_id)
+    token = Put.update(statement=statement, value=images, row_id=property_id)
     return token
-
-
-def update_image(statement, value, row_id):
-    try:
-        connect = Connection.connection()
-        cursor = connect.cursor()
-        cursor.execute(statement, (value, row_id))
-        connect.commit()
-        print("Modification Successful!")
-        return True
-    except Exception as error:
-        print("Modification Error: ", error)
-        return False
-    finally:
-        # closing database connection.
-        cursor.close()
-        connect.close()
-        print("Connection Closed!")

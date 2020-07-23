@@ -1,59 +1,34 @@
-from data import Connection
+from data import Get
+from model import BaseProperty
 
 
-def view_all_property():  # user view list
+def all_list():  # user view list
     statement = """SELECT * FROM BaseProperty"""
-    property_list = get_all_property(statement)
-    return property_list
+    return view(statement=statement)
 
 
-def view_all_for_sell_property():  # view for sell property list
+def sell():  # view for sell property list
     statement = """SELECT * FROM BaseProperty bp WHERE bp.OwnershipID = null OR op.Usage = 'SELL' OR op.Usage = 'BOTH'"""
-    property_list = get_all_property(statement)
+    return view(statement=statement)
+
+
+def rent():  # view for rent property list
+    statement = """SELECT * FROM BaseProperty WHERE OwnershipID != null AND Usage = 'BOTH' OR Usage = 'RENT'"""
+    return view(statement=statement)
+
+
+def self(user_id):  # view own property list
+    statement = """SELECT * FROM BaseProperty WHERE OwnershipID = %s OR RentID = %s"""
+    property_list = []
+    records = Get.read_multiple(statement=statement, row_id=user_id)
+    for record in records:
+        property_list.append(vars(BaseProperty.BaseProperty(record)))
     return property_list
 
 
-def view_all_for_rent_property():  # view for rent property list
-    statement = """SELECT * FROM BaseProperty bp WHERE bp.OwnershipID != null AND op.Usage = 'BOTH' OR op.Usage = 'RENT'"""
-    property_list = get_all_property(statement)
+def view(statement):
+    property_list = []
+    records = Get.read_all(statement=statement)
+    for record in records:
+        property_list.append(vars(BaseProperty.BaseProperty(record)))
     return property_list
-
-
-def view_my_property(user_id):  # view own property list
-    statement = """SELECT * FROM BaseProperty bp WHERE op.UserID = %s OR bp.RentID = %s"""
-    property_list = get_all_owned_property(statement, user_id)
-    return property_list
-
-
-def get_all_property(statement):
-    try:
-        connect = Connection.connection()
-        cursor = connect.cursor()
-        cursor.execute(statement)
-        records = cursor.fetchall()
-        return records
-    except Exception as error:
-        print("Selection Error: ", error)
-        return None
-    finally:
-        # closing database connection.
-        cursor.close()
-        connect.close()
-        print("Connection Closed!")
-
-
-def get_all_owned_property(statement, row_id):
-    try:
-        connect = Connection.connection()
-        cursor = connect.cursor()
-        cursor.execute(statement, (row_id,))
-        records = cursor.fetchall()
-        return records
-    except Exception as error:
-        print("Selection Error: ", error)
-        return None
-    finally:
-        # closing database connection.
-        cursor.close()
-        connect.close()
-        print("Connection Closed!")
