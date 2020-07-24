@@ -8,7 +8,7 @@ def user(property_id):  # view billing list
 
 
 def admin(property_uid):  # admin view billing list
-    statement = """SELECT * FROM Billing b JOIN BaseProperty bp ON bp.PropertyID = b.PropertyID WHERE b.BillingType != 'Rental' AND bp.PropertyUID = ?"""
+    statement = """SELECT * FROM Billing b JOIN BaseProperty bp ON bp.PropertyID = b.PropertyID WHERE b.BillingType != 'Rent' AND bp.PropertyUID = ?"""
     return view(statement, property_uid)
 
 
@@ -19,7 +19,7 @@ def overview(property_id):  # Overview of unpaid bill
     for record in records:
         bill = Billing.Billing(record)
         unpaid_bill_list.append(bill.billing_amount)
-    return {"total": sum(unpaid_bill_list)}
+    return {"property_id": property_id, "total": sum(unpaid_bill_list)}
 
 
 def view(statement, row_id):

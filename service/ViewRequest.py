@@ -3,7 +3,7 @@ from model import Request
 
 
 def admin():  # admin view pending request list
-    statement = """SELECT * FROM Request r INNER JOIN BaseProperty bp ON bp.PropertyID = r.PropertyID WHERE bp.OwnershipID = bp.PropertyUID"""
+    statement = """SELECT * FROM Request r INNER JOIN BaseProperty bp ON bp.PropertyID = r.PropertyID WHERE bp.OwnershipID = '7EE30661-80AD-4862-966B-7279D0F80D22'"""
     request_list = []
     records = Get.read_all(statement=statement)
     for record in records:

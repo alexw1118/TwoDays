@@ -7,7 +7,7 @@ def request(value):
     return token
 
 
-def response(request_status, request_id):
+def response(value):
     statement = """UPDATE Request SET RequestStatus = ? WHERE RequestID = ?"""
-    token = Put.update(statement=statement, value=request_status, row_id=request_id)
+    token = Put.update(statement=statement, value=value)
     return token
