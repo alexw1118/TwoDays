@@ -7,10 +7,7 @@ def verify(input_data, existing_data):
 
 
 def valid_integer(data):
-    value = int(data)
-    if isinstance(value, int):
-        return True
-    return False          # True: is integer, False: not integer
+    return re.match(r"^ *\d[\d]*$", data)
 
 
 def valid_decimal(data):

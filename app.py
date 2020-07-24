@@ -1,6 +1,6 @@
-from flask import json, jsonify, app, Flask, render_template
+from flask import json, jsonify, app, Flask, render_template, request
 from model import User, BaseProperty
-from service import DisplayChart, FilterProperty, Login, NewBill, Payment, PurchaseProperty, Register, RentProperty, \
+from service import Login, NewBill, Payment, PurchaseProperty, Register, RentProperty, \
     RequestApproval, UpdateProperty, UploadDocument, UploadImage, ViewBilling, ViewProperty, ViewPropertyDetails, \
     ViewRequest, UpdateBilling
 from utils import common
@@ -12,7 +12,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def default():
-    return render_template('Index.html')
+    uid = common.get_uuid()
+    return render_template('Index.html', uid=uid)
 
 
 def login(username, password):
@@ -24,7 +25,7 @@ def login(username, password):
 def register(user_details):  # user id = uuid (get from common)
     user = User.User(user=user_details)
     token = Register.sign_up(user=user)
-    return token[1]
+    return token
 
 
 def property_for_rent():
@@ -39,12 +40,8 @@ def my_property(user_id):
     return ViewProperty.self(user_id=user_id)
 
 
-def filter_property_for_rent(attribute_list):
-    return FilterProperty.filter_rent(filter_list=attribute_list)
-
-
-def filter_property_for_sale(attribute_list):
-    return FilterProperty.filter_rent(filter_list=attribute_list)
+def admin_property():
+    return ViewProperty.admin()
 
 
 def property_details(property_id):
@@ -63,8 +60,8 @@ def admin_billing(property_uid):
     return ViewBilling.admin(property_uid=property_uid)
 
 
-def update_billing(new_billing_details, billing_id):
-    token = UpdateBilling.modify(value=new_billing_details, billing_id=billing_id)
+def update_billing(new_billing_details):
+    token = UpdateBilling.modify(value=new_billing_details)
     if token is True:
         return "Billing Updated Successfully!"
     else:
@@ -83,8 +80,8 @@ def admin_request():
     return ViewRequest.admin()
 
 
-def respond_request(status, request_id):
-    token = RequestApproval.response(request_status=status, request_id=request_id)
+def respond_request(value):
+    token = RequestApproval.response(value=value)
     return token
 
 
@@ -101,27 +98,28 @@ def upload_property(csv_file):
         return "Unable to Upload Property List!"
 
 
-def update_property_details(new_property_details, property_id):
-    token = UpdateProperty.modify(value=new_property_details, property_id=property_id)
+def update_property_details(new_property_details):
+    token = UpdateProperty.modify(value=new_property_details)
     if token is True:
         return "Property Updated Successfully!"
     else:
         return "Unable to Update The Property!"
 
 
-def rent_property(user_id, property_id):
-    token = RentProperty.rent(user_id=user_id, property_id=property_id)
+def rent_property(value):
+    token = RentProperty.rent(value=value)
     return token
 
 
 def purchase_property(new_property_details, previous_property_uid, previous_ownership_id):
-    token = PurchaseProperty.transfer(value=new_property_details, is_deleted=1, row_id_1=previous_property_uid, row_id_2=previous_ownership_id)
+    token = PurchaseProperty.transfer(value=new_property_details, property_uid=previous_property_uid, ownership_id=previous_property_uid)
     return token
 
 
 def payment(billing_id):
     payment_date = date.today()
-    token = Payment.pay(payment_date=payment_date, billing_id=billing_id)
+    value = (payment_date, billing_id)
+    token = Payment.pay(value=value)
     return token
 
 
@@ -130,19 +128,7 @@ def new_bill(new_billing_details):
     return token
 
 
-def display_historical_price(property_uid):
-    rent_price = []
-    sell_price = []
-    last_updated_date = []
-    property_list = DisplayChart.show_historical_price(property_uid=property_uid)
-    for each_property in property_list:
-        rent_price.append(each_property.rent_price)
-        sell_price.append(each_property.sell_price)
-        last_updated_date.append(each_property.last_updated_date)
-    price_date_list = list(zip(rent_price, sell_price, last_updated_date))
-    return price_date_list
-
-
+#  BELOW ALL IS THE TESTING, CAN BE REFERENCES, CAN BE REMOVED
 #  after approved, when purchase button clicked, transaction start:
 #  t1: signed contract & checkout to 3rd party payment api
 #  t2: if payment success/ receive payment success token from 3rd party payment api, then insert payment into billing table
@@ -157,31 +143,59 @@ def purchase(property_id, property_uid, ownership_id):
     return token
 
 
-@app.route('/url_path')
-def name():
-    records = ViewProperty.view_all_property()
-    list = []
-    for record in records:
-        baseProp = BaseProperty.BaseProperty(record)
-        do = vars(baseProp)
-        list.append(do)
-    return jsonify(list)
+@app.route('/login', methods=['POST'])
+def login_to_page():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    token = login(username, password)
+    msg_dict = {
+        "success": token[0],
+        "message": token[1]
+    }
+    return jsonify(msg_dict)
 
 
-@app.route('/url_path2')
-def summary():
-    records = ViewProperty.view_all_property()
-    list = []
-    for record in records:
-        baseProp = BaseProperty.BaseProperty(record)
-        do = vars(baseProp)
-        list.append(do)
-    response = app.response_class(
-        response=json.dumps(list),
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+@app.route('/url1')
+def test1():
+    # data = filter_property_for_sale({'property_type': 'Any', 'furnish': 'Any', 'tenure_type': 'Any', 'min_sell_price': 'Any', 'max_sell_price': 'Any', 'bedroom': 2, 'bathroom': 'Any', 'parking': 'Any', 'min_size': 1024, 'max_size': 1024})
+    uid = common.get_uuid()
+    user_details = (uid, 'WEE', 'wjs', '123', 'abc@email.com', '456', 'user', 'CIMB', '1111', '981118', None)
+    value = ('3291aa4b-f87d-426a-bc52-955cfd5a9389', 6)
+    new_property_details = ('2626190D-5046-4C77-8D10-0E4F8773F42C',	410000, 'Serviced Apartment', 2016, 'Freehold', 1, 2, 0, 2, 893, None, 'B-3A-20', 'Pacific Place', 'Jalan 1a/4a', 'Petaling Jaya', 'Selangor', '47301', 'Ara Damansara', 'link to the contract', 1, None, 0, 0, 'D678D762-C8C8-4EBC-90E4-655896E8949A', None, None, None, 'BOTH', 0, None, '2020-06-04', '2021-06-03', 1, 'Free Utilities', date.today(), None,	None)
+    data = purchase_property(new_property_details, '2626190D-5046-4C77-8D10-0E4F8773F42C', '0B31D4C2-9A19-4F16-BABE-BD37C1F06BB3')
+    msg_dict = {
+        "success": data
+    }
+    return jsonify(msg_dict)
+
+
+@app.route('/url2')
+def test2():
+
+    # data = filter_property_for_rent({'property_type': 'Any', 'furnish': 'Any', 'move_in_date': 'Any', 'min_sell_price': 'Any', 'max_sell_price': 'Any', 'bedroom': 4, 'bathroom': 'Any', 'parking': 'Any', 'min_size': 'Any', 'max_size': 'Any'})
+    billing_details = ('01-July-2020', 'Rental', 2500, None, 1, 2)  # Property_id is the last value
+    value = ('Approve', 1)  # Request_id is the last value
+    request_details = ('15-July-2020', 'Pending', 'Rent', '01-July-2020', 1, '7ee30661-80ad-4862-966b-7279d0f80d22', 4)
+    today = date.today()
+    new_property_details = ('Fully', 3000.00, None, 'RENT', 0, None, None, None, None, 'House For Rent', today, None, None, 6)
+    data = update_property_details(new_property_details=new_property_details)
+    msg_dict = {
+        "message": data
+    }
+    return jsonify(msg_dict)
+
+
+@app.route('/url3')
+def test3():
+    # data = filter_property_for_sale({'property_type': 'Any', 'furnish': 'Any', 'tenure_type': 'Any', 'min_sell_price': 'Any', 'max_sell_price': 'Any', 'bedroom': 2, 'bathroom': 'Any', 'parking': 'Any', 'min_size': 1024, 'max_size': 1024})
+    uid = common.get_uuid()
+    path = "data.csv"
+    data = upload_property(path)
+    msg_dict = {
+        "message": data
+    }
+    return jsonify(msg_dict)
 
 
 if __name__ == '__main__':

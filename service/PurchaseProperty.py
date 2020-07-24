@@ -7,9 +7,10 @@ def owned(value):
     return token
 
 
-def transfer(value, is_deleted, property_id, ownership_id):
+def transfer(value, property_uid, ownership_id):
     statement = """UPDATE BaseProperty SET IsDeleted = ? WHERE PropertyUID = ? AND OwnershipID = ?"""
-    token = Put.update(statement=statement, value=is_deleted, row_id_1=property_id, row_id_2=ownership_id)
+    previous_value = (1, property_uid, ownership_id)
+    token = Put.update(statement=statement, value=previous_value)
     if token is True:
         token = owned(value)
     return token
