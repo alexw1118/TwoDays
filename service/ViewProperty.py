@@ -2,13 +2,8 @@ from data import Get
 from model import BaseProperty
 
 
-def all_list():  # user view list
-    statement = """SELECT * FROM BaseProperty"""
-    return view(statement=statement)
-
-
-def sell():  # view for sell property list
-    statement = """SELECT * FROM BaseProperty bp WHERE bp.OwnershipID = null OR op.Usage = 'SELL' OR op.Usage = 'BOTH'"""
+def sale():  # view for sale property list
+    statement = """SELECT * FROM BaseProperty WHERE OwnershipID = null OR Usage = 'SALE' OR Usage = 'BOTH'"""
     return view(statement=statement)
 
 
@@ -18,7 +13,7 @@ def rent():  # view for rent property list
 
 
 def self(user_id):  # view own property list
-    statement = """SELECT * FROM BaseProperty WHERE OwnershipID = %s OR RentID = %s"""
+    statement = """SELECT * FROM BaseProperty WHERE OwnershipID = ? OR RentID = ?"""
     property_list = []
     records = Get.read_multiple(statement=statement, row_id=user_id)
     for record in records:
