@@ -11,8 +11,17 @@ def admin():  # admin view pending request list
     return request_list
 
 
-def owner(user_id):
-    statement = """SELECT * FROM Request r INNER JOIN BaseProperty bp ON bp.PropertyID = r.PropertyID WHERE bp.OwnershipID = %s"""
+def incoming(ownership_id):
+    statement = """SELECT * FROM Request r INNER JOIN BaseProperty bp ON bp.PropertyID = r.PropertyID WHERE bp.OwnershipID = ?"""
+    return view(statement=statement, user_id=ownership_id)
+
+
+def outgoing(user_id):
+    statement = """SELECT * FROM Request WHERE UserID = ?"""
+    return view(statement=statement, user_id=user_id)
+
+
+def view(statement, user_id):
     request_list = []
     records = Get.read_multiple(statement=statement, row_id=user_id)
     for record in records:
