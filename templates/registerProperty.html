@@ -1,0 +1,237 @@
+{% extends "layout.html" %}
+{% block title %}
+Welcome | IOI Properties Group
+{% endblock %}
+{% block content %}
+<div class="page-content--bgf7">
+
+                <section class="au-breadcrumb2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="au-breadcrumb-content">
+                                    <div class="au-breadcrumb-left">
+                                        <span class="au-breadcrumb-span">You are here:</span>
+                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                            <li class="list-inline-item active">
+                                                <a href="#">Home</a>
+                                            </li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Dashboard</li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Register Property</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="welcome p-t-10">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="title-4">Register Property
+                                    <!--<span>John!</span>-->
+                                </h1>
+                                <hr class="line-seprate">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Property</strong> Details
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <form action="/registerP" method="post" class="form-horizontal">
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputa" class=" form-control-label">UID</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputa" name="UID" placeholder="UID" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputb" class=" form-control-label">Price</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text"  id="text-inputb" name="Price" placeholder="Price" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputc" class=" form-control-label">Property Type</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select name="PropertyType" id="text-inputc" class="form-control" readonly="readonly">
+                                                        <option value="Apartment">Apartment</option>
+                                                        <option value="Condo">Condo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputd" class=" form-control-label">Year Built</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text"  id="text-inputd" name="YearBuilt" placeholder="Year Built" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="selecta" class=" form-control-label">Tenure Type</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select name="TenureType" id="selecta" class="form-control" readonly="readonly">
+                                                        <option value="Leasehold">Leasehold</option>
+                                                        <option value="Freehold">Freehold</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inpute" class=" form-control-label">Bedroom</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inpute" name="Bedroom" placeholder="Bedroom" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputf" class=" form-control-label">Bathroom</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputf" name="Bathroom" placeholder="Bathroom" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputg" class=" form-control-label">Extra Room</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputg" name="ExtraRoom" placeholder="Extra Room" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputh" class=" form-control-label">Parking</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputh" name="Parking" placeholder="Parking" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputi" class=" form-control-label">Size</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputi" name="Size" placeholder="Size" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputj" class=" form-control-label">Floor Plan</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputj" name="FloorPlan" placeholder="Floor Plan" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputk" class=" form-control-label">Unit</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputk" name="Unit" placeholder="Unit" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputl" class=" form-control-label">Area</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputl" name="Area" placeholder="Area" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputm" class=" form-control-label">Street</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputm" name="Street" placeholder="Street" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputn" class=" form-control-label">District</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputn" name="District" placeholder="District" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputo" class=" form-control-label">State</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputo" name="State" placeholder="State" class="form-control">
+                                                </div>
+                                            </div><div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputp" class=" form-control-label">Postcode</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text-input" id="text-inputp" name="Postcode" placeholder="Postcode" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputq" class=" form-control-label">Township</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputq" name="Township" placeholder="Township" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                                </button>
+                                                <button type="reset" class="btn btn-danger btn-sm" id="reset">
+                                                    <i class="fa fa-ban"></i> Reset
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-60 p-b-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Referenced from © 2019 Colorlib.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+{% endblock %}

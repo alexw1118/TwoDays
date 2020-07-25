@@ -12,7 +12,17 @@ def admin(property_uid):  # admin view billing list
     return view(statement, property_uid)
 
 
-def overview(property_id):  # Overview of unpaid bill
+def overview_unpaid():  # Overview of unpaid bill
+    statement = """SELECT * FROM Billing WHERE PaymentDate IS NULL"""
+    unpaid_bill_list = []
+    records = Get.read_all(statement=statement)
+    for record in records:
+        bill = Billing.Billing(record)
+        unpaid_bill_list.append(bill.billing_amount)
+    return sum(unpaid_bill_list)
+
+
+def overview(property_id):  # Overview of unpaid bill by property
     statement = """SELECT * FROM Billing WHERE PaymentDate IS NULL AND PropertyID = ?"""
     unpaid_bill_list = []
     records = Get.read_multiple(statement=statement, row_id=property_id)

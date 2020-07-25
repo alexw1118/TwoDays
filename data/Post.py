@@ -25,15 +25,18 @@ def create_multiple(statement, value):
         connect = Connection.connection()
         cursor = connect.cursor()
         data = pd.read_csv(value)
+        print(data)
         df = pd.DataFrame(data, columns=['PropertyUID', 'Price', 'PropertyType', 'YearBuilt', 'TenureType', 'Bedroom',
                                          'Bathroom', 'ExtraRoom', 'Parking', 'Size', 'FloorPlan', 'Unit', 'Area',
                                          'Street', 'District', 'State', 'Postcode', 'Township', 'Contract',
-                                         'ContactPeriod', 'RentID', 'OwnershipID'])
+                                         'ContractPeriod', 'OwnershipID'])
+        print(df)
         for row in df.itertuples():
+            print(row)
             cursor.execute(statement, row.PropertyUID, row.Price, row.PropertyType, row.YearBuilt, row.TenureType,
                            row.Bedroom, row.Bathroom, row.ExtraRoom, row.Parking, row.Size, row.FloorPlan, row.Unit,
                            row.Area, row.Street, row.District, row.State, row.Postcode, row.Township, row.Contract,
-                           row.ContactPeriod, row.RentID, row.OwnershipID)
+                           row.ContractPeriod, row.OwnershipID)
         connect.commit()
         print("Insertion Successful!")
         return True

@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block title %}
+Welcome | IOI Properties Group
+{% endblock %}
+{% block content %}
+<div class="page-content--bgf7">
+
+                <section class="au-breadcrumb2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="au-breadcrumb-content">
+                                    <div class="au-breadcrumb-left">
+                                        <span class="au-breadcrumb-span">You are here:</span>
+                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                            <li class="list-inline-item active">
+                                                <a href="#">Home</a>
+                                            </li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Dashboard</li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Manage Purchase Request</li>
+                                        </ul>
+                                    </div>
+                                    <form class="au-form-icon--sm" action="" method="post">
+                                        <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
+                                        <button class="au-btn--submit2" type="submit">
+                                            <i class="zmdi zmdi-search"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="welcome p-t-10">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="title-4">Manage Purchase Request
+                                    <!--<span>John!</span>-->
+                                </h1>
+                                <hr class="line-seprate">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="title-5 m-b-35">Request table</h3>
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Type</th>
+                                                <th>Rental Start Date</th>
+                                                <th>Rental Period</th>
+                                                <th>Name</th>
+                                                <th>Phone</th>
+                                                <th>Area Name</th>
+                                                <th>Property Type</th>
+                                                <th>Price</th>
+                                                <th>Doc</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in request_list %}
+                                                <tr class="tr-shadow">
+                                                    <td>{{item.request_date}}</td>
+                                                    <td style="color: red;">{{item.request_status}}</td>
+                                                    <td>{{item.request_type}}</td>
+                                                    <td>{{item.rental_start_date}}</td>
+                                                    <td>{{item.rental_period}}</td>
+                                                    <td>{{requestuser[0][1]}}</td>
+                                                    <td>{{requestuser[0][5]}}</td>
+                                                    <td>{{property_detail[0]['area']}}</td>
+                                                    <td>{{property_detail[0]['property_type']}}</td>
+                                                    <td>{{property_detail[0]['price']}}</td>
+                                                    <td>{{property_detail[0]['contract']}}</td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <input type="hidden"  name="RequestID" value="{{item.request_id}}" class="form-control">
+                                                            <form name ="frm" action ="/requestApprove" method="post">
+                                                                <button name="RequestID" type="submit" title="Approve" class="item" data-placement="top" data-toggle="tooltip" value="{{item.request_id}}">
+                                                                    <i class="zmdi zmdi-check"></i>
+                                                                </button>
+                                                            </form>
+                                                            <input type="hidden"  name="RequestID" value="{{item.request_id}}" class="form-control">
+                                                            <form name ="frm" action ="/requestReject" method="post">
+                                                                <button name="RequestID" type="submit" title="Reject" class="item" data-placement="top" data-toggle="tooltip" value="{{item.request_id}}">
+                                                                    <i class="zmdi zmdi-block"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="spacer"></tr>
+
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-60 p-b-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Referenced from © 2019 Colorlib.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+{% endblock %}

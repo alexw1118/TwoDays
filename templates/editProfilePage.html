@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+{% block title %}
+Welcome | IOI Properties Group
+{% endblock %}
+{% block content %}
+<div class="page-content--bgf7">
+
+                <section class="au-breadcrumb2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="au-breadcrumb-content">
+                                    <div class="au-breadcrumb-left">
+                                        <span class="au-breadcrumb-span">You are here:</span>
+                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                            <li class="list-inline-item active">
+                                                <a href="#">Home</a>
+                                            </li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Dashboard</li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Account</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="welcome p-t-10">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="title-4">Edit Account
+                                    <!--<span>John!</span>-->
+                                </h1>
+                                <hr class="line-seprate">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Account</strong> Details
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <form action="${pageContext.request.contextPath}/editAcc" method="post" class="form-horizontal">
+                                            <small class="form-text text-muted">Required*</small>
+                                            <p>--------------------------------------------------------------------------</p>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Employee ID</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-input" name="empid" class="form-control" value="{{user[0][0]}}" readonly="readonly">
+                                                    <small class="form-text text-muted">Not changeable</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Role</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-input1" name="empid" class="form-control" value="{{user[0][6]}}" readonly="readonly">
+                                                    <small class="form-text text-muted">Not changeable</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Full Name*</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-input2" name="fullname" placeholder="Full name" class="form-control" value="{{user[0][1]}}">
+                                                    <small class="form-text text-muted">Please enter the real name</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="email-input" class=" form-control-label">Email*</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="email" id="email-input" name="email" placeholder="Enter Email" class="form-control" value="{{user[0][4]}}">
+                                                    <small class="help-block form-text">Please enter the email</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Contact*</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-input3" name="contact" placeholder="Contact number" class="form-control" value="{{user[0][5]}}">
+                                                    <small class="form-text text-muted">Please enter the contact number</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Username*</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-input4" name="username" placeholder="Username" class="form-control" value="{{user[0][2]}}">
+                                                    <small class="form-text text-muted">Please enter the username</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="password-input" class=" form-control-label">Password*</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="password-input" name="password" placeholder="Password" class="form-control" value="{{user[0][3]}}">
+                                                    <small class="help-block form-text">Please enter an easy password and request employee to change themselves</small>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                                </button>
+                                                <button type="reset" class="btn btn-danger btn-sm" id="reset">
+                                                    <i class="fa fa-ban"></i> Reset
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-60 p-b-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Referenced from © 2019 Colorlib.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+{% endblock %}

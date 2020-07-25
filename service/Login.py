@@ -1,6 +1,6 @@
 from utils import common
 from model import User
-from data import Get
+from data import Get, Connection
 
 
 def sign_in(input_credential):
@@ -10,3 +10,25 @@ def sign_in(input_credential):
     return (False, "null") if common.isNone(input_credential) \
         else (True, "success") if common.verify(input_credential, user_credential) \
         else (False, "fail")
+
+
+def user_detail(username):  # view billing list
+    statement = """SELECT * FROM UserAccount WHERE username = ?"""
+    return view(statement, username)
+
+
+def view(statement, row_id):
+    try:
+        connect = Connection.connection()
+        cursor = connect.cursor()
+        cursor.execute(statement, (row_id,))
+        records = cursor.fetchall()
+        return records
+    except Exception as error:
+        print("Selection Error: ", error)
+        return None
+    finally:
+        # closing database connection.
+        cursor.close()
+        connect.close()
+        print("Connection Closed!")

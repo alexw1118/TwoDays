@@ -7,13 +7,257 @@ from utils import common
 from datetime import date
 
 
+userA = []
+
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def default():
-    uid = common.get_uuid()
-    return render_template('Index.html', uid=uid)
+    return render_template('home.html')
+
+
+@app.route('/login', methods=['POST'])
+def admin_login():
+    username = request.form['username']
+    password = request.form['password']
+    credential = username, password
+    result = Login.sign_in(credential)
+    token = result[0]
+    msg = result[1]
+    if token:
+        print(msg)
+        user = Login.user_detail(username)
+        userA.append(username)
+        property_list = ViewProperty.view_all()
+        sold_property_list = ViewProperty.view_sold()
+        request_list = ViewRequest.admin()
+        billing_amount = ViewBilling.overview_unpaid()
+        return render_template('dashboard.html', user=user, propertycount=len(property_list),
+                               propertysold=len(sold_property_list), requestcount=len(request_list),
+                               totalbillingamount=billing_amount)
+    else:
+        print(msg)
+        return render_template('login.html')
+
+
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
+
+
+@app.route('/home')
+def home_page():
+    return render_template('home.html')
+
+
+@app.route('/viewAllProperty')
+def view_property_page():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        property_list = ViewProperty.admin()
+        return render_template('viewAllProperty.html', user=user, propertylist=property_list)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/dashboard')
+def dashboard_page():
+    if len(userA) != 0:
+        user = Login.user_detail(userA[0])
+        property_list = ViewProperty.view_all()
+        sold_property_list = ViewProperty.view_sold()
+        request_list = ViewRequest.admin()
+        billing_amount = ViewBilling.overview_unpaid()
+        return render_template('dashboard.html', user=user, propertycount=len(property_list),
+                               propertysold=len(sold_property_list), requestcount=len(request_list),
+                               totalbillingamount=billing_amount)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/editAccount')
+def edit_account_page():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        return render_template('editProfilePage.html', user=user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/manageProperty')
+def manage_property_page():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        property_list = ViewProperty.admin()
+        return render_template('manageProperty.html', user=user, propertylist=property_list)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/registerProperty')
+def register_property_page():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        return render_template('registerProperty.html', user=user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/registerP', methods=['POST'])
+def register_property():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        UID = request.form['UID']
+        price = request.form['Price']
+        PropertyType = request.form['PropertyType']
+        YearBuilt = request.form['YearBuilt']
+        TenureType = request.form['TenureType']
+        Bedroom = request.form['Bedroom']
+        Bathroom = request.form['Bathroom']
+        Extraroom = request.form['ExtraRoom']
+        Parking = request.form['Parking']
+        Size = request.form['Size']
+        FloorPlan = request.form['FloorPlan']
+        Unit = request.form['Unit']
+        Area = request.form['Area']
+        Street = request.form['Street']
+        District = request.form['District']
+        State = request.form['State']
+        Postcode = request.form['Postcode']
+        Township = request.form['Township']
+        inserted = UID, price, PropertyType, YearBuilt, TenureType, Bedroom, Bathroom, Extraroom, Parking, Size, FloorPlan, Unit, Area, Street, District, State, Postcode, Township
+        UploadDocument.register_Property(inserted)
+        return manage_property_page()
+    else:
+        return render_template('login.html')
+
+
+@app.route('/redirect2UpdateP', methods=['POST'])
+def redirect_update_property():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        PropertyID = request.form['PropertyID']
+        return render_template('editProperty.html', PropertyID=PropertyID, user=user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/redirect2ViewDetails', methods=['POST'])
+def redirect_property_details():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        PropertyID = request.form['PropertyID']
+        property_detail = ViewProperty.view_details(PropertyID)
+        return render_template('viewDetails.html', property_detail=property_detail, user=user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/viewRequest')
+def redirect_view_request():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        request_list = admin_request()
+        requestuser = Login.user_detail(username)
+        property_detail = ViewProperty.view_details(request_list[0]['PropertyID'])
+        return render_template('viewAllRequest.html', user=user, request_list=request_list, requestuser=requestuser, property_detail=property_detail)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/updateP', methods=['POST'])
+def update_property():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        PropertyID = request.form['PropertyID']
+        Furnish = request.form['Furnish']
+        RentPrice = request.form['RentPrice']
+        SellPrice = request.form['SellPrice']
+        Usage = request.form['Usage']
+        FreeUtility = request.form['FreeUtility']
+        Images = request.form['Images']
+        RentalStartDate = request.form['RentalStartDate']
+        RentalEndDate = request.form['RentalEndDate']
+        RentalPeriod = request.form['RentalPeriod']
+        Description = request.form['Description']
+        LastUpdatedDate = request.form['LastUpdatedDate']
+        RentContract = request.form['RentContract']
+        SellContract = request.form['SellContract']
+        inserted = Furnish, RentPrice, SellPrice, Usage, FreeUtility, Images, RentalStartDate, RentalEndDate, RentalPeriod, Description, LastUpdatedDate, RentContract, SellContract, PropertyID
+        UpdateProperty.modify(inserted)
+        return manage_property_page()
+    else:
+        return render_template('login.html')
+
+
+@app.route('/requestApprove', methods=['POST'])
+def request_approve():
+    if len(userA) != 0:
+        RequestID = request.form['RequestID']
+        value = 'Approve', RequestID
+        respond_request(value)
+        username = userA[0]
+        user = Login.user_detail(username)
+        request_list = admin_request()
+        requestuser = Login.user_detail(username)
+        property_detail = ViewProperty.view_details(request_list[0]['PropertyID'])
+        return render_template('viewAllRequest.html', user=user, request_list=request_list, requestuser=requestuser,
+                               property_detail=property_detail)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/requestReject', methods=['POST'])
+def request_reject():
+    if len(userA) != 0:
+        RequestID = request.form['RequestID']
+        value = 'Reject', RequestID
+        respond_request(value)
+        redirect_view_request()
+        username = userA[0]
+        user = Login.user_detail(username)
+        request_list = admin_request()
+        requestuser = Login.user_detail(username)
+        property_detail = ViewProperty.view_details(request_list[0]['PropertyID'])
+        return render_template('viewAllRequest.html', user=user, request_list=request_list, requestuser=requestuser,
+                               property_detail=property_detail)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/redirect2BatchUpload')
+def redirect_upload():
+    if len(userA) != 0:
+        username = userA[0]
+        user = Login.user_detail(username)
+        return render_template('uploadExcelFile.html', user=user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/batchUploadProperty', methods=['POST'])
+def batch_upload():
+    f = request.form['csvfile']
+    upload_property(f)
+    user = Login.user_detail(userA[0])
+    property_list = ViewProperty.view_all()
+    sold_property_list = ViewProperty.view_sold()
+    request_list = ViewRequest.admin()
+    billing_amount = ViewBilling.overview_unpaid()
+    return render_template('dashboard.html', user=user, propertycount=len(property_list),
+                           propertysold=len(sold_property_list), requestcount=len(request_list),
+                           totalbillingamount=billing_amount)
 
 
 def login(username, password):
@@ -196,6 +440,17 @@ def test3():
         "message": data
     }
     return jsonify(msg_dict)
+
+
+@app.route('/api/login', methods=['POST'])
+def login_user_api():
+    data = request.get_json()
+    message = login(data['username'], data['password'])
+    login_dict = {
+        "success": message[0],
+        "message": message[1]
+    }
+    return jsonify(login_dict)
 
 
 if __name__ == '__main__':

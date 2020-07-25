@@ -1,0 +1,216 @@
+{% extends "layout.html" %}
+{% block title %}
+Welcome | IOI Properties Group
+{% endblock %}
+{% block content %}
+<div class="page-content--bgf7">
+
+                <section class="au-breadcrumb2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="au-breadcrumb-content">
+                                    <div class="au-breadcrumb-left">
+                                        <span class="au-breadcrumb-span">You are here:</span>
+                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                            <li class="list-inline-item active">
+                                                <a href="#">Home</a>
+                                            </li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">Dashboard</li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                            <li class="list-inline-item">View Property Details</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="welcome p-t-10">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="title-4">View Property Details
+                                    <!--<span>John!</span>-->
+                                </h1>
+                                <hr class="line-seprate">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Property</strong> Details
+                                    </div>
+                                    <div class="card-body card-block">
+                                        <form action="/updateP" method="post" class="form-horizontal">
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputah" class=" form-control-label">PropertyID</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputah" name="PropertyID"  class="form-control" value="{{property_detail[0]['property_id']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputr" class=" form-control-label">Contract</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputr" name="Contract" placeholder="Contract" class="form-control" value="{{property_detail[0]['contract']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputs" class=" form-control-label">Contract Period</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputs" name="ContractPeriod" placeholder="Contract Period" class="form-control" value="{{property_detail[0]['contract_period']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputaz" class=" form-control-label">RentID</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputaz" name="ContractPeriod" placeholder="RentID" class="form-control" value="{{property_detail[0]['rent_id']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputt" class=" form-control-label">Furnish</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputt" name="Furnish" placeholder="Furnish" class="form-control" value="{{property_detail[0]['furnish']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputu" class=" form-control-label">Rent Price</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputu" name="RentPrice" placeholder="Rent Price" class="form-control" value="{{property_detail[0]['rent_price']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputv" class=" form-control-label">SellPrice</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputv" name="SellPrice" placeholder="Sell Price" class="form-control" value="{{property_detail[0]['sell_price']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputw" class=" form-control-label">Usage</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputw" name="Usage" placeholder="Usage" class="form-control" value="{{property_detail[0]['usage']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputx" class=" form-control-label">Free Utility</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputx" name="FreeUtility" placeholder="Free Utility" class="form-control" value="{{property_detail[0]['free_utility']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputy" class=" form-control-label">Images</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputy" name="Images" placeholder="Images" class="form-control" value="{{property_detail[0]['images']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputz" class=" form-control-label">Rental Start Date</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputz" name="RentalStartDate" placeholder="Rental Start Date Period" class="form-control" value="{{property_detail[0]['rent_start_date']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputaa" class=" form-control-label">Rental End Date</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputaa" name="RentalEndDate" placeholder="Rental End Date" class="form-control" value="{{property_detail[0]['rent_end_date']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputab" class=" form-control-label">Rental Period</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputab" name="RentalPeriod" placeholder="Rental Period" class="form-control" value="{{property_detail[0]['rental_period']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputac" class=" form-control-label">Description</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputac" name="Description" placeholder="Description" class="form-control" value="{{property_detail[0]['description']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputag" class=" form-control-label">Last Updated Date</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="date" id="text-inputag" name="LastUpdatedDate" placeholder="Last Updated Date" class="form-control" value="<%= (new java.util.Date())%>" value="{{property_detail[0]['last_updated_date']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputad" class=" form-control-label">Rent Contract</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputad" name="RentContract" placeholder="Rent Contract" class="form-control" value="{{property_detail[0]['rent_contract']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="text-inputae" class=" form-control-label">Sell Contract</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" id="text-inputae" name="SellContract" placeholder="Sell Contract" class="form-control" value="{{property_detail[0]['sell_contract']}}" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="p-t-60 p-b-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Referenced from © 2019 Colorlib.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+{% endblock %}
